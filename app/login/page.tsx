@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { fetcher } from "@/lib/fetcher"
 
 export default function LoginPage(){
     const [username, setUsername] = useState("")
@@ -9,8 +10,8 @@ export default function LoginPage(){
     const router = useRouter()
 
     const handleLogin = async () => {
-        const res = await fetch("/api/login", {
-            method: "POST",
+        const res = await fetcher(`/api/login`, {
+            method:"POST", 
             headers: {
                 "Content-Type": "application/json"
             },
@@ -22,7 +23,6 @@ export default function LoginPage(){
         })
 
         const data = await res.json()
-        // console.log("api/login data = ",data)
         if(data.token){
             localStorage.setItem("token", data.token) 
             alert("登入成功")

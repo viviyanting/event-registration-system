@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/fetcher"
 
 type Event = {
     id: number;
@@ -25,21 +26,11 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
       try
       {
         const token = localStorage.getItem("token");
-        const res = await fetch(`/api/events/${ Number(eventId) }`, {
-          headers: token
-            ? { Authorization: `Bearer ${token}` }
-            : undefined
-        });
-
+        const res = await fetcher(`/api/events/${eventId}`,{token})
         if(res.status === 404){
           setError("活動不存在");
           return;
         }
-
-        if(!res.ok){
-          throw new Error();
-        }
-
         const data = await res.json();
         setEvent(data);
 
@@ -69,7 +60,6 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
       if (!res.ok) {
         throw new Error();
       }
-
       const data = await res.json();
       setEvent(data);
       alert(successMessage);
@@ -80,7 +70,7 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
     } finally {
       setLoading(false);
     }
-};
+  };
 
 
   //報名
@@ -90,14 +80,7 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
     setLoading(true);
 
     const token = localStorage.getItem("token");
-
-    const res = await fetch(`/api/events/${ eventId }/register`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
+    const res = await fetcher(`/api/events/${eventId}/register`,{method:"POST", token})
     await handleApiResponse(res, "報名成功！");
   };
 
@@ -109,14 +92,7 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
     setLoading(true);
 
     const token = localStorage.getItem("token");
-
-    const res = await fetch(`/api/events/${ eventId }/cancel`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-
+    const res = await fetcher(`/api/events/${eventId}/cancel`,{method:"DELETE", token})
     await handleApiResponse(res, "已取消報名！");
   };
 

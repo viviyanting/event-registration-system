@@ -7,7 +7,7 @@ type Props = {
   params: Promise<{ id: string }>;
 };
 
-export async function POST(request:Request,props: Props) {
+export async function DELETE(request:Request,props: Props) {
     var userId = 0;
     try
     {

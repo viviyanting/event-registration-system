@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { fetcher } from "@/lib/fetcher"
 import EventList from "@/components/EventList";
 
 type Event = {
@@ -20,11 +21,7 @@ export default function MyEventsClient(){
     useEffect(() => {
         const fetchMyEvent = async () => {
         const token = localStorage.getItem("token");
-        const res = await fetch(`/api/my-events`, {
-          headers: token
-            ? { Authorization: `Bearer ${token}` }
-          : undefined
-        });
+        const res = await fetcher(`/api/my-events`,{token});
 
         if (res.status === 401) {
             alert("請先登入");

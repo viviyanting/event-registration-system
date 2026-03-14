@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import { fetcher } from "@/lib/fetcher"
 
 export default function LoginPage(){
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
     const handleLogin = async () => {
-        const res = await fetch("/api/login", {
+        const res = await fetcher("/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

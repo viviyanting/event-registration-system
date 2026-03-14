@@ -1,13 +1,14 @@
 import EventList from "@/components/EventList";
+import { fetcher } from "@/lib/fetcher"
 
 async function getEvents() {
 
-    const res = await fetch(`${ process.env.NEXT_PUBLIC_BASE_URL}/api/events`)
-    if(!res.ok){
+    const events = await fetcher(`${ process.env.NEXT_PUBLIC_BASE_URL}/api/events`)
+    console.log("events = ",events)
+    if(!events.ok){
         throw new Error("failed to fetch events");
     }
-
-    return res.json();
+    return events.json();
 }
 
 export default async function EventsPage(){
