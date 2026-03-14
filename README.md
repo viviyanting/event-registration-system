@@ -1,24 +1,45 @@
 # Event Registration System
+A fullstack event registration system built with Next.js App Router and Prisma.
 
-A simple fullstack event registration system.
+Users can:
+- View event list
+- View event detail
+- Register for an event
+- Cancel registration
+
+Authentication is handled with JWT.
 
 ## Tech Stack
 
+Frontend
 - Next.js (App Router)
+- React
 - TypeScript
+
+Backend
+- Next.js API Routes
 - Prisma ORM
+
+Database
 - SQLite
-- JWT Authentication
+
+Authentication
+- JWT
 
 ## Features
 
-- User login / register
-- Event list
+- Event list page
 - Event detail page
-- Register / cancel event
-- Authentication with JWT
+- Register for event
+- Cancel registration
+- JWT authentication
 
-## Run locally
+## Screenshots
+![Event List](./screenshots/event-list.png)
+![Event Detail](./screenshots/event-detail.png)
+![Event CancelButton](./screenshots/event-detail-cancelButton.png)
+
+## Installation
 
 ```bash
 npm install
