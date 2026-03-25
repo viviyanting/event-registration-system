@@ -4,7 +4,7 @@ import { useState } from "react"
 import { fetcher } from "@/lib/fetcher"
 
 export default function LoginPage(){
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
     const handleLogin = async () => {
@@ -13,7 +13,8 @@ export default function LoginPage(){
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password})
+            body: JSON.stringify({ email, password})
+            //body: JSON.stringify({ username, password})
         })
         
         const data = await res.json()
@@ -30,11 +31,10 @@ export default function LoginPage(){
     return (
         <div className="container">
             <h1>Login</h1>
-
             <input 
-              placeholder="username" 
-              value={username}
-              onChange={(e)=>setUsername(e.target.value)}
+              placeholder="email" 
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <input 
               type="password"

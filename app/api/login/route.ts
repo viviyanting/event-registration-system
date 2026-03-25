@@ -4,11 +4,11 @@ import { signToken } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 
 export async function POST(req:Request) {
-    const { username , password } = await req.json()
+    const { email , password } = await req.json()
 
     //帳號驗證
     const user = await prisma.user.findUnique({
-        where: { username }
+        where: { email }
     })
 
     if(!user || user.password !==password){
@@ -18,6 +18,6 @@ export async function POST(req:Request) {
     }
 
     //簽入token
-    const token = signToken(user.id,user.username);
+    const token = signToken(user);
     return NextResponse.json({ token })
 }

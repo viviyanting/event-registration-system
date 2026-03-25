@@ -1,15 +1,9 @@
 "use client"
 import EventItem from "./EventItem";
+import { Event } from "@/types/event";
 
-type Event = {
-    id: number;
-    title: string;
-    content: string;
-    isRegistered: boolean;
-};
-
-type Props = {
-    events: Event[];
+type Props = { 
+    events:Event[]
 };
 
 export default function EventList({events}:Props){

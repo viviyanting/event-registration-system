@@ -27,18 +27,34 @@ export async function GET(request: Request) {
 
     //取得我的活動清單
     const events = await prisma.registration.findMany({
-      where: {
-        userId
+      where: { userId },
+      include: { 
+        event: {
+          include:{ _count:{ select: { registrations:true } } }
+        },
       },
-      include: {
-        event: true
-      }
     })
 
     //重組資料
     let myEvents = [];
-    for(var i = 0 ; i < events.length ; i++ ){
-      const temp = events[i].event;
+    for(const event of events){
+      const e = event.event;
+      var content = "";
+      if(e.content.length > 15){
+        content = e.content.substring(0,14) + "...";
+      }
+      else{
+        content = e.content;
+      }
+      var temp = {
+        id: e.id,
+        title: e.title,
+        content: content,
+        capacity:e.capacity,
+        date:e.date,
+        registrations:e._count.registrations,
+        isFull:e._count.registrations >=  e.capacity,
+      }
       myEvents.push(temp);
     }
     return NextResponse.json(myEvents);    

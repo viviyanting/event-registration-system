@@ -3,15 +3,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetcher } from "@/lib/fetcher"
 import EventList from "@/components/EventList";
+import { Events } from "@/types/event";
 
-type Event = {
-    id: number;
-    title: string;
-    content: string;
-    isRegistered: boolean;
-};
-
-type Events = Event[];
+// type Events = Event[];
 
 export default function MyEventsClient(){
 

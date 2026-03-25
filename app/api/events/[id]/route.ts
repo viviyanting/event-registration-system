@@ -15,8 +15,16 @@ export async function GET(
     //取得活動詳細資料
     const event = await prisma.event.findUnique({
       where: {  id: eventId  },
-      include: {  registrations: true  }
+      include: { 
+        _count: { select: { registrations: true } } ,
+        registrations : userId ? {
+          where: { userId },
+          select: { id: true }
+        }
+        : false
+      }
     });
+    console.log("event = ", event);
 
     if(!event){
       return Response.json(
@@ -25,18 +33,15 @@ export async function GET(
       );
     }
 
-    //判斷是否報名(沒有登入就是沒報名)
-    const isRegistered = userId
-      ? event.registrations.some(r => r.userId === Number(userId))
-      : false;
-
-
   //整理資料再傳到Client
   const  result = {
     id: eventId,
     title: event?.title,
     content: event?.content,
-    isRegistered: isRegistered
+    isRegistered: userId ? event.registrations.length > 0 : false,
+    registrations: event?._count.registrations,
+    capacity: event.capacity
+
   };
 
   return Response.json(result);

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { fetcher } from "@/lib/fetcher"
 
 export default function LoginPage(){
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const router = useRouter()
 
@@ -16,7 +16,7 @@ export default function LoginPage(){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username,
+                email,
                 password
             }),
             credentials:"same-origin"
@@ -36,11 +36,10 @@ export default function LoginPage(){
     return (
         <div className="container">
             <h1>Login</h1>
-
             <input 
-              placeholder="username" 
-              value={username}
-              onChange={(e)=>setUsername(e.target.value)}
+              placeholder="email" 
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <input 
               type="password"

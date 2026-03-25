@@ -4,13 +4,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetcher } from "@/lib/fetcher"
-
-type Event = {
-    id: number;
-    title: string;
-    content: string;
-    isRegistered: boolean;
-};
+import { Event } from "@/types/event";
 
 export default function EventDetailClient({ eventId }: { eventId: string }) {
 
@@ -41,6 +35,9 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
       }      
     };
     fetchEvent();
+    // if(event?.isFull){
+    //   setLoading(false);
+    // }
   }, [eventId]);
 
   //按報名/取消後
@@ -118,6 +115,14 @@ export default function EventDetailClient({ eventId }: { eventId: string }) {
           我要報名
         </button>
       )}
+
+      <div>
+        已報名人數：{event.registrations} 人
+        <br></br>
+        名額上限：{event.capacity} 人
+      </div>  
+
+
     </div>
   );
 }
